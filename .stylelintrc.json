@@ -5,16 +5,16 @@
     "stylelint-a11y",
     "stylelint-high-performance-animation"
   ],
-  "extends": [
-    "stylelint-config-sass-guidelines",
-    "stylelint-prettier/recommended"
-  ],
+  "extends": ["stylelint-config-sass-guidelines", "stylelint-prettier/recommended"],
   "rules": {
     "prettier/prettier": true,
     "sh-waqar/declaration-use-variable": ["/color/", "font", "box-shadow", "transition", "font-family"],
-    "plugin/no-low-performance-animation-properties": [true, {
-      "ignore": "paint-properties"
-    }],
+    "plugin/no-low-performance-animation-properties": [
+      true,
+      {
+        "ignore": "paint-properties"
+      }
+    ],
     "a11y/no-text-align-justify": true,
     "a11y/selector-pseudo-class-focus": true,
 
@@ -45,8 +45,11 @@
     "selector-combinator-space-after": "always",
     "font-family-name-quotes": "always-unless-keyword",
     "function-whitespace-after": "always",
-    "rule-empty-line-before": ["always", {
-      "except": ["first-nested"]
-    }]
+    "rule-empty-line-before": [
+      "always",
+      {
+        "except": ["first-nested"]
+      }
+    ]
   }
 }
