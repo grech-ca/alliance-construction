@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: 24px 60px;
+
+  .logo {
+    display: flex;
+    justify-content: flex-start;
+    flex: 1;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 10;
+
+    .link {
+      margin: 0 16px;
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+
+  .phone {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+  }
+}
