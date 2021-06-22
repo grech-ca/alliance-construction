@@ -1,13 +1,15 @@
 $primary: #55f;
 
+$white: #fff;
 $black: #000;
 $blue: #69f;
+$gallery-gray: #efefef;
 
 $round-sm: 4px;
-$round-md: calc($round-sm * 2);
-$round-lg: calc($round-sm * 3);
-$round-xl: calc($round-sm * 4);
-$round-2xl: calc($round-sm * 5);
-$round-3xl: calc($round-sm * 6);
-$round-4xl: calc($round-sm * 7);
+$round-md: $round-sm * 2;
+$round-lg: $round-sm * 3;
+$round-xl: $round-sm * 4;
+$round-2xl: $round-sm * 5;
+$round-3xl: $round-sm * 6;
+$round-4xl: $round-sm * 7;
 $round-full: 100%;

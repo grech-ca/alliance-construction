@@ -25,7 +25,8 @@
   "plugins": [
     "@typescript-eslint",
     "react-hooks",
-    "react"
+    "react",
+    "prettier"
   ],
   "rules": {
     "semi": 2,
@@ -48,10 +49,12 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "jsxSingleQuote": true
       }
     ],
 
+    "jsx-quotes": ["error", "prefer-single"],
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "react/display-name": "off",

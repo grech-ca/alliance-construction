@@ -14,50 +14,22 @@ model Admin {
   password String
 }
 
+model File {
+  id   Int   @id @default(autoincrement())
+  data Bytes
+}
+
 model Photo {
-  id             Int             @id @default(autoincrement())
-  url            String
-  projectPhoto   ProjectPhoto?
-  portfolioPhoto PortfolioPhoto?
-  layoutPhoto    LayoutPhoto?
-  ResourcePhoto  ResourcePhoto[]
-}
-
-model ProjectPhoto {
-  photo     Photo   @relation(fields: [photoId], references: [id])
-  photoId   Int
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId Int
-
-  @@id([photoId, projectId])
-}
-
-model PortfolioPhoto {
-  photo              Photo            @relation(fields: [photoId], references: [id])
-  photoId            Int
-  portfolioProject   PortfolioProject @relation(fields: [portfolioProjectId], references: [id])
-  portfolioProjectId Int
-
-  @@id([photoId, portfolioProjectId])
-}
-
-model LayoutPhoto {
-  photo    Photo  @relation(fields: [photoId], references: [id])
-  photoId  Int
-  layout   Layout @relation(fields: [layoutId], references: [id])
-  layoutId Int
-  position Int?
-
-  @@id([photoId, layoutId])
-}
-
-model ResourcePhoto {
-  photo      Photo    @relation(fields: [photoId], references: [id])
-  photoId    Int
-  resource   Resource @relation(fields: [resourceId], references: [id])
-  resourceId Int
-
-  @@id([photoId, resourceId])
+  id                 Int               @id @default(autoincrement())
+  url                String
+  project            Project?          @relation(fields: [projectId], references: [id])
+  projectId          Int?
+  portfolioProject   PortfolioProject? @relation(fields: [portfolioProjectId], references: [id])
+  portfolioProjectId Int?
+  layout             Layout?           @relation(fields: [layoutId], references: [id])
+  layoutId           Int?
+  resource           Resource?         @relation(fields: [resourceId], references: [id])
+  resourceId         Int?
 }
 
 model Resource {
@@ -65,7 +37,7 @@ model Resource {
   projects      Project[]
   name          String
   advantages    ResourceAdvantage[]
-  resourcePhoto ResourcePhoto[]
+  resourcePhoto Photo[]
 }
 
 model ResourceAdvantage {
@@ -76,14 +48,14 @@ model ResourceAdvantage {
 }
 
 model Layout {
-  id          Int           @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   commonArea  Int
   buildArea   Int
   position    Int?
   description String?
-  project     Project       @relation(fields: [projectId], references: [id])
+  project     Project @relation(fields: [projectId], references: [id])
   projectId   Int
-  layoutPhoto LayoutPhoto[]
+  layoutPhoto Photo[]
 }
 
 enum ProjectType {
@@ -93,7 +65,7 @@ enum ProjectType {
 
 model Project {
   id                Int                @id @default(autoincrement())
-  photos            ProjectPhoto[]
+  photos            Photo[]
   type              ProjectType
   portfolioProjects PortfolioProject[]
   floors            Int
@@ -105,11 +77,11 @@ model Project {
 }
 
 model PortfolioProject {
-  id        Int              @id @default(autoincrement())
-  photos    PortfolioPhoto[]
+  id        Int     @id @default(autoincrement())
+  photos    Photo[]
   address   String
   area      Int
   bedrooms  Int
-  project   Project          @relation(fields: [projectId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
   projectId Int
 }

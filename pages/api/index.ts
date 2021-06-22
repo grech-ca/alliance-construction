@@ -6,8 +6,8 @@ import { ApolloServer } from 'apollo-server-micro';
 import { makeSchema } from 'nexus';
 import { nexusPrisma } from 'nexus-plugin-prisma';
 
-import prisma from '../server/prisma';
-import * as allTypes from '../server/schema';
+import prisma from '../../server/prisma';
+import * as allTypes from '../../server/schema';
 
 const schema = makeSchema({
   types: allTypes,

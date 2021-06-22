@@ -1,8 +1,21 @@
 * {
   font-family: 'Roboto';
+  box-sizing: border-box;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+  background: $gallery-gray;
 }
 
 .container {
   width: 1280px;
   margin: 0 auto;
+}
+
+.page {
+  display: flex;
+  height: 100%;
 }
