@@ -20,6 +20,11 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
     <ApolloProvider client={client}>
       <ModalProvider>
         <Component {...pageProps} />
+        <style jsx>{`
+          :global(.js-focus-visible) :focus:not(.focus-visible) {
+            outline: none;
+          }
+        `}</style>
       </ModalProvider>
     </ApolloProvider>
   );

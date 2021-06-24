@@ -1,0 +1,69 @@
+.image-input {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  cursor: pointer;
+
+  .dropzone {
+    border: 3px dashed $gray;
+    border-radius: $round-lg;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    padding: 40px;
+    transition: $transition;
+
+    .drop-icon {
+      margin-bottom: 20px;
+      transition: $transition;
+
+      path {
+        stroke: $gray;
+      }
+    }
+
+    .drop-hint {
+      transition: $transition;
+      color: $gray;
+      font-size: 18px;
+      font-weight: 500;
+      user-select: none;
+    }
+
+    &.active {
+      border-color: $primary;
+
+      .drop-icon {
+        path {
+          stroke: $primary;
+        }
+      }
+
+      .drop-hint {
+        color: $primary;
+      }
+    }
+  }
+
+  .preview {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 5px;
+    background: $gallery-gray;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      flex: 1;
+    }
+
+    .preview-image {
+      object-fit: cover;
+      padding: 5px;
+      height: 150px;
+      width: 200px;
+    }
+  }
+}

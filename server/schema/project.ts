@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { objectType, extendType, mutationField, enumType, inputObjectType } from 'nexus';
 
 import prisma from '../prisma';

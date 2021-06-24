@@ -1,0 +1,15 @@
+.create-project-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+
+  .submit {
+    @include button;
+
+    border-radius: $round-md;
+    background: $gallery-gray;
+    color: $black;
+    padding: 14px;
+  }
+}

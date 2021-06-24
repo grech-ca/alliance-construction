@@ -2,8 +2,11 @@ $primary: #55f;
 
 $white: #fff;
 $black: #000;
+$toning-black: rgba($black, 0.8);
 $blue: #69f;
 $gallery-gray: #efefef;
+$light-gray: #ccc;
+$gray: #bbb;
 
 $round-sm: 4px;
 $round-md: $round-sm * 2;
@@ -13,3 +16,5 @@ $round-2xl: $round-sm * 5;
 $round-3xl: $round-sm * 6;
 $round-4xl: $round-sm * 7;
 $round-full: 100%;
+
+$transition: 0.2s ease;
