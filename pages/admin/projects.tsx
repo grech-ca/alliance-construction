@@ -21,13 +21,17 @@ const AdminProjectsPage: FC = () => {
       </Head>
       <Sidebar />
       <main className='content'>
-        {/* <div className='projects-filter'>
-          <input type='text' placeholder='Номер продукта' />
-        </div> */}
-        <button onClick={open}>Добавить проект</button>
+        <div className='projects-bar'>
+          <input type='text' />
+          <button className='btn default' onClick={open}>
+            Добавить проект
+          </button>
+        </div>
         <div className='projects-list'>
-          {projects?.map(({ id, type }) => (
-            <div key={id}>{id}</div>
+          {projects?.map(({ id, type }, key) => (
+            <div key={id}>
+              {id} {key}
+            </div>
           ))}
         </div>
       </main>

@@ -49,12 +49,18 @@ export const CreateProjectMutation = mutationField('createProject', {
   args: {
     data: CreateProjectInput,
   },
-  resolve: async (parent, { data: { photos, ...data } }) => {
+  resolve: (parent, { data: { photos, ...data } }) => {
+    console.log('resolution started');
     return new Promise(resolveProject => {
+      console.log('main promise');
+      console.log(photos);
       void Promise.all(photos).then((files: any[]) => {
+        console.log('promise all 1');
         const photoIds: Promise<number>[] = files.map((file: any) => {
+          console.log('photoIds');
           const photoPromise = new Promise<number>(resolvePhotoId => {
             const stream = file.createReadStream();
+            console.log('photoPromise stream');
 
             const buffers: Uint8Array[] = [];
 
@@ -64,6 +70,7 @@ export const CreateProjectMutation = mutationField('createProject', {
 
             stream.on('end', () => {
               const buffer = Buffer.concat(buffers);
+              console.log('stream ended');
 
               void prisma.file.create({ data: { data: buffer } }).then(({ id }) => resolvePhotoId(id));
             });
@@ -73,6 +80,7 @@ export const CreateProjectMutation = mutationField('createProject', {
         });
 
         void Promise.all(photoIds).then(ids => {
+          console.log('promise all 2');
           void prisma.project
             .create({
               data: {

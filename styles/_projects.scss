@@ -13,3 +13,11 @@
     padding: 14px;
   }
 }
+
+.projects-bar {
+  display: flex;
+  background: $white;
+  border-radius: $round-md;
+  padding: 20px;
+  width: 100%;
+}

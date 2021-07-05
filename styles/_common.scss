@@ -20,4 +20,11 @@ body,
 .page {
   display: flex;
   height: 100%;
+
+  &.admin {
+    .content {
+      padding: 20px;
+      flex: 1;
+    }
+  }
 }

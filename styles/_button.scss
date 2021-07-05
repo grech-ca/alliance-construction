@@ -1,0 +1,12 @@
+.btn {
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: $round-md;
+
+  &.default {
+    background: $primary;
+  }
+}
