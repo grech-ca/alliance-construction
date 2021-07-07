@@ -8,10 +8,8 @@ import Input from 'components/common/Input';
 
 import useModal from 'hooks/useModal';
 
-import { ProjectType, useCreateProjectMutation } from 'generated/graphql';
-
 interface CreateProjectValues {
-  type: ProjectType;
+  type: string;
   bedrooms: number;
   floors: number;
   buildPrice: number;
@@ -20,7 +18,7 @@ interface CreateProjectValues {
 }
 
 const initialValues: CreateProjectValues = {
-  type: ProjectType.Exemplary,
+  type: 'EXEMPLARY',
   bedrooms: 1,
   floors: 1,
   buildPrice: 1,
@@ -31,22 +29,22 @@ const initialValues: CreateProjectValues = {
 const CreateProject: FC = () => {
   const { close } = useModal('CreateProject');
 
-  const [createProject] = useCreateProjectMutation();
+  // const [createProject] = useCreateProjectMutation();
 
-  const onSubmit = useCallback(
-    values => {
-      void createProject({
-        variables: {
-          data: values,
-        },
-      }).then(() => close());
-    },
-    [close, createProject],
-  );
+  // const onSubmit = useCallback(
+  //   values => {
+  //     void createProject({
+  //       variables: {
+  //         data: values,
+  //       },
+  //     }).then(() => close());
+  //   },
+  //   [close, createProject],
+  // );
 
   return (
     <Modal name='CreateProject' label='Добавить проект'>
-      <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      <Formik initialValues={initialValues} onSubmit={console.log}>
         <Form className='create-project-form'>
           <div className='input-row'>
             <Input type='value' label='Спальни' name='bedrooms' />

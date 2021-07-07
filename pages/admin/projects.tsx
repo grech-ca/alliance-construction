@@ -7,11 +7,8 @@ import CreateProject from 'admin/project/CreateProject';
 
 import useModal from 'hooks/useModal';
 
-import { useProjectsQuery } from 'generated/graphql';
-
 const AdminProjectsPage: FC = () => {
-  const { data, loading } = useProjectsQuery();
-  const { projects } = data || {};
+  const projects: any[] = [];
   const { open } = useModal('CreateProject');
 
   return (
