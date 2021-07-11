@@ -1,6 +1,9 @@
 import { FC, useCallback } from 'react';
+import { useQuery, useMutation, QueryClient } from 'react-query';
 
-import { Formik, Form, Field, FieldInputProps } from 'formik';
+import { snakeCase } from 'lodash';
+
+import { Formik, Form } from 'formik';
 
 import Modal from 'components/common/Modal';
 import ImageInput from 'admin/common/ImageInput';
@@ -29,22 +32,28 @@ const initialValues: CreateProjectValues = {
 const CreateProject: FC = () => {
   const { close } = useModal('CreateProject');
 
-  // const [createProject] = useCreateProjectMutation();
+  const createPost = useCallback((values: CreateProjectValues) => {
+    const formData = new FormData();
 
-  // const onSubmit = useCallback(
-  //   values => {
-  //     void createProject({
-  //       variables: {
-  //         data: values,
-  //       },
-  //     }).then(() => close());
-  //   },
-  //   [close, createProject],
-  // );
+    Object.entries<CreateProjectValues>(values).forEach(entry => {
+      if (entry[0] === 'photos') {
+        return entry[1].forEach(photo => formData.append('photos', photo));
+      }
+
+      if (typeof entry[1] === 'number') return formData.append(snakeCase(entry[0]), entry[1].toString());
+
+      return formData.append(entry[0], entry[1]);
+    });
+
+    void fetch('/api/projects', {
+      method: 'POST',
+      body: formData,
+    });
+  }, []);
 
   return (
     <Modal name='CreateProject' label='Добавить проект'>
-      <Formik initialValues={initialValues} onSubmit={console.log}>
+      <Formik initialValues={initialValues} onSubmit={createPost}>
         <Form className='create-project-form'>
           <div className='input-row'>
             <Input type='value' label='Спальни' name='bedrooms' />

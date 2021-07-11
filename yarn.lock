@@ -389,6 +389,13 @@
     "@types/qs" "*"
     "@types/serve-static" "*"
 
+"@types/formidable@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@types/formidable/-/formidable-1.2.3.tgz#99ee5fd4eafbaa95448c8b670e5e8e389f2af380"
+  integrity sha512-Ibu3TyzldPvzTK1yus5+uPDwN5m6pXCcO0c0rPKA1uce5ERjqP5AX9reKEqQFVlCScqjbQgitIQEOLlb6qd7Sw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/json-schema@^7.0.7":
   version "7.0.7"
   resolved "https://registry.npmjs.org/@types/json-schema/-/json-schema-7.0.7.tgz"
@@ -398,6 +405,11 @@
   version "4.14.170"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.170.tgz#0d67711d4bf7f4ca5147e9091b847479b87925d6"
   integrity sha512-bpcvu/MKHHeYX+qeEN8GE7DIravODWdACVA1ctevD8CN24RhPZIKMn9ntfAsrvLfSX3cR5RrBKAbYm9bGs0A+Q==
+
+"@types/lodash@^4.14.171":
+  version "4.14.171"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.171.tgz#f01b3a5fe3499e34b622c362a46a609fdb23573b"
+  integrity sha512-7eQ2xYLLI/LsicL2nejW9Wyko3lcpN6O/z0ZLHrEQsg280zIdCv1t/0m6UtBjUHokCGBQ3gYTbHzDkZ1xOBwwg==
 
 "@types/mdast@^3.0.0":
   version "3.0.3"
@@ -1964,6 +1976,11 @@ foreach@^2.0.5:
   version "2.0.5"
   resolved "https://registry.npmjs.org/foreach/-/foreach-2.0.5.tgz"
   integrity sha1-C+4AUBiusmDQo6865ljdATbsG5k=
+
+formidable@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/formidable/-/formidable-1.2.2.tgz#bf69aea2972982675f00865342b982986f6b8dd9"
+  integrity sha512-V8gLm+41I/8kguQ4/o1D3RIHRmhYFG4pnNyonvua+40rqcEmT4+V71yaZ3B457xbbgCsCfjSPi65u/W6vK1U5Q==
 
 formik@^2.2.9:
   version "2.2.9"

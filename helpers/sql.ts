@@ -9,7 +9,7 @@ const sql = <ExpectedData>(literals: TemplateStringsArray, ...values: (string | 
 
   return new Promise((resolve, reject) => {
     connection.query(joinedLiterals, (err: MysqlError, res: ExpectedData) => {
-      console.log(res);
+      // console.log(res);
       if (err) reject(err);
       resolve(res);
     });

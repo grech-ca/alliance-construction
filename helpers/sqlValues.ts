@@ -1,17 +1,29 @@
-const sqlValues = (data: Record<string, undefined | null | number | string>): string => {
-  const fields = Object.keys(data);
+type SqlValuesData = Record<string, undefined | null | number | string>;
 
-  const values = Object.values(data).map(value => {
-    if (value === null || value === undefined || (typeof value === 'number' && isNaN(value)))
-      return JSON.stringify('NULL');
-    if (typeof value === 'object') return JSON.stringify(JSON.stringify(value));
+const sqlValues = (data: SqlValuesData | SqlValuesData[]): string => {
+  const multiple = Array.isArray(data);
 
-    return JSON.stringify(value);
-  });
+  const dataArray = multiple ? data : [data];
 
-  const valuesString = `(${fields.join(', ')}) VALUES (${values.join(', ')})`;
+  const fields = Object.keys(dataArray[0]);
+  const fieldsString: string = fields.join(', ');
 
-  return valuesString;
+  const getValues = (data: SqlValuesData) => {
+    return Object.values(data).map(value => {
+      if (value === null || value === undefined || (typeof value === 'number' && isNaN(value)))
+        return JSON.stringify('NULL');
+      if (typeof value === 'object') return JSON.stringify(JSON.stringify(value));
+
+      return JSON.stringify(value);
+    });
+  };
+
+  const values = dataArray.map(dataObj => getValues(dataObj).join(', '));
+  const valuesString: string = values.join('), (');
+
+  const result = `(${fieldsString}) VALUES (${valuesString})`;
+
+  return result;
 };
 
 export default sqlValues;
