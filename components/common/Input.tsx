@@ -1,26 +1,20 @@
-import { FC, InputHTMLAttributes, useCallback } from 'react';
-import { useField } from 'formik';
+import { FC, InputHTMLAttributes } from 'react';
 
 import classnames from 'classnames';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  name: string;
-  label: string;
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
 }
 
-const Input: FC<InputProps> = ({ className, name, label, ...inputProps }) => {
-  const [{ value }, meta, { setValue }] = useField(name);
-
-  const handleChange = useCallback(e => setValue(e.target.value), [setValue]);
-
-  return (
-    <div className={classnames('input', className)}>
+const Input: FC<InputProps> = ({ className, name, label, ...inputProps }) => (
+  <div className={classnames('input', className)}>
+    {label && (
       <label className='input-label' htmlFor={name}>
         {label}
       </label>
-      <input onChange={handleChange} value={value} className='input-field' name={name} {...inputProps} />
-    </div>
-  );
-};
+    )}
+    <input className='input-field' {...inputProps} />
+  </div>
+);
 
 export default Input;

@@ -1,0 +1,17 @@
+.image {
+  border-radius: $round-md;
+  flex: 1;
+
+  &.fallback {
+    background: $catskill-white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      path {
+        stroke: $wild-blue-yonder;
+      }
+    }
+  }
+}

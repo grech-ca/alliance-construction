@@ -6,19 +6,22 @@
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: start;
   flex-direction: column;
   background: $toning-black;
   padding: 40px 20px 60px;
-  overflow-y: auto;
+  flex: 1;
 }
 
 .modal {
   display: flex;
+  justify-content: center;
   align-items: center;
-  flex: 1;
+  outline: none;
+  position: static;
 
   @media (max-width: 1440px) {
-    width: 600px;
+    width: 500px;
   }
 
   @media (max-width: 960px) {
@@ -27,7 +30,7 @@
 
   .modal-content {
     position: relative;
-    width: 500px;
+    width: 100%;
     min-height: 250px;
     border-radius: $round-2xl;
     background: $white;

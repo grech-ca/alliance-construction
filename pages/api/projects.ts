@@ -6,17 +6,23 @@ import { omit } from 'lodash';
 
 import sql from 'helpers/sql';
 import sqlValues from 'helpers/sqlValues';
+import sqlWhere from 'helpers/sqlWhere';
 
 import middleware from 'server/middleware';
 import extractBufferData from 'helpers/extractBufferData';
 
-interface Project {
+interface ProjectsImageRelation {
+  image: number;
+  project: number;
+}
+export interface Project {
   id: number;
   bedrooms: number;
   price: number;
   build_price: number;
   type: string;
   floors: number;
+  images: number[];
 }
 
 export const config = {
@@ -28,8 +34,31 @@ export const config = {
 const projectsHandler = nextConnect<NextApiRequest, NextApiResponse>()
   .use(middleware)
   .get(async (req, res) => {
-    const projects = await sql`SELECT * FROM projects;`;
-    res.json(projects);
+    try {
+      const search = req.query.search as string;
+
+      const projects = await sql<Project[]>`SELECT * FROM projects ${
+        search ? sqlWhere({ id: { $like: `${search}%` } }) : ''
+      };`;
+
+      const projectsWithPhotos = projects.map(project => {
+        return new Promise(resolve => {
+          void sql<
+            ProjectsImageRelation[]
+          >`SELECT image FROM projects_images_relation WHERE project=${project.id}`.then(images => {
+            resolve({
+              ...project,
+              images: images.map(({ image }) => image),
+            });
+          });
+        });
+      });
+
+      void Promise.all(projectsWithPhotos).then(data => res.json(data));
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Internal Server error');
+    }
   })
   .post(async (req, res) => {
     try {
@@ -73,7 +102,7 @@ const projectsHandler = nextConnect<NextApiRequest, NextApiResponse>()
       res.json(projects[0]);
     } catch (err) {
       console.error(err);
-      res.status(500);
+      res.status(500).send('Internal Server error');
     }
   });
 

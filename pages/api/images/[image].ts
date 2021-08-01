@@ -8,24 +8,30 @@ interface FileType {
 }
 
 const imageHandler: NextApiHandler = (req, res) => {
-  const { image } = req.query;
+  try {
+    const { image } = req.query;
 
-  const imageId = parseInt(Array.isArray(image) ? image[0] : image);
+    const imageId = parseInt(Array.isArray(image) ? image[0] : image);
 
-  void sql<FileType[]>`SELECT data FROM files WHERE type="image" AND id=${imageId}`.then(data => {
-    if (!data.length) return res.status(404).send('Not Found');
+    if (!imageId) return res.status(404).send('Not Found');
 
-    const file = data[0];
+    void sql<FileType[]>`SELECT data FROM files WHERE type="image" AND id=${imageId}`.then(data => {
+      if (!data.length) return res.status(404).send('Not Found');
 
-    const buffer = Buffer.from(JSON.parse(file.data));
+      const file = data[0];
 
-    res.writeHead(200, {
-      'Content-Type': 'image/jpeg',
-      'Content-Length': buffer.length,
+      const buffer = Buffer.from(JSON.parse(file.data));
+
+      res.writeHead(200, {
+        'Content-Type': 'image/jpeg',
+        'Content-Length': buffer.length,
+      });
+
+      void res.end(buffer);
     });
-
-    void res.end(buffer);
-  });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 export default imageHandler;

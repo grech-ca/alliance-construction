@@ -9,7 +9,7 @@ html,
 body,
 #__next {
   height: 100%;
-  background: $gallery-gray;
+  background: $light-gray;
 }
 
 .container {
@@ -25,6 +25,11 @@ body,
     .content {
       padding: 20px;
       flex: 1;
+      overflow-y: auto;
     }
   }
+}
+
+.fill {
+  flex: 1;
 }
