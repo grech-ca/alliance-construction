@@ -5,8 +5,15 @@
   cursor: pointer;
   padding: 10px;
   border-radius: $round-md;
+  min-height: 38px;
+  min-width: 38px;
 
   &.default {
     background: $primary;
+  }
+
+  &.alternate {
+    background: $catskill-white;
+    color: $wild-blue-yonder;
   }
 }

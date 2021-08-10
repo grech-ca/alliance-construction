@@ -8,7 +8,7 @@
     @include button;
 
     border-radius: $round-md;
-    background: $gallery-gray;
+    background: $light-gray;
     color: $black;
     padding: 14px;
   }
@@ -20,4 +20,67 @@
   border-radius: $round-md;
   padding: 20px;
   width: 100%;
+  margin-bottom: 24px;
+
+  .btn.add {
+    font-size: 24px;
+    line-height: 0;
+  }
+}
+
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 16px;
+  margin-bottom: 20px;
+
+  .project {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background: $white;
+    border-radius: $round-lg;
+    padding: 16px;
+    height: 250px;
+    text-decoration: none;
+    color: $black;
+
+    .image {
+      max-height: 190px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .project-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      .project-name {
+        color: $space-black;
+        white-space: nowrap;
+      }
+
+      .project-features {
+        list-style: none;
+        margin: 0;
+        display: flex;
+        color: $space-gray;
+
+        .project-feature {
+          display: flex;
+          align-items: center;
+
+          svg {
+            margin-right: 4px;
+          }
+        }
+
+        .project-feature + .project-feature {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
 }
