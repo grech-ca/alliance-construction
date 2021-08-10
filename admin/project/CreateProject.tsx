@@ -7,7 +7,7 @@ import { Formik, Form } from 'formik';
 
 import Modal from 'components/common/Modal';
 import ImageInput from 'admin/common/ImageInput';
-import Input from 'components/common/Input';
+import Input from 'components/common/FormInput';
 
 import useModal from 'hooks/useModal';
 

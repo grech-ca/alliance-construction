@@ -1,3 +1,5 @@
+import toSqlValue from 'helpers/toSqlValue';
+
 type SqlValuesData = Record<string, undefined | null | number | string>;
 
 const sqlValues = (data: SqlValuesData | SqlValuesData[]): string => {
@@ -9,13 +11,7 @@ const sqlValues = (data: SqlValuesData | SqlValuesData[]): string => {
   const fieldsString: string = fields.join(', ');
 
   const getValues = (data: SqlValuesData) => {
-    return Object.values(data).map(value => {
-      if (value === null || value === undefined || (typeof value === 'number' && isNaN(value)))
-        return JSON.stringify('NULL');
-      if (typeof value === 'object') return JSON.stringify(JSON.stringify(value));
-
-      return JSON.stringify(value);
-    });
+    return Object.values(data).map(value => toSqlValue(value));
   };
 
   const values = dataArray.map(dataObj => getValues(dataObj).join(', '));

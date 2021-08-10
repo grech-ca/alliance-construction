@@ -1,7 +1,31 @@
 .input {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+
+  &.search {
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+
+    .input-field {
+      padding-right: 46px;
+
+      &:placeholder-shown + svg {
+        opacity: 0.4;
+      }
+
+      &:placeholder {
+        color: $black;
+        opacity: 0.4;
+      }
+    }
+
+    svg {
+      transition: $transition;
+      position: absolute;
+      right: 16px;
+    }
+  }
 
   .input-label {
     margin-bottom: 8px;
@@ -11,8 +35,14 @@
     outline: none;
     padding: 10px 16px;
     border-radius: $round-md;
-    border: 1px solid $light-gray;
+    border: none;
+    background: $light-gray;
     width: 100%;
+    transition: $transition;
+
+    &:focus {
+      box-shadow: outline($blue);
+    }
   }
 }
 
