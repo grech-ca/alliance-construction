@@ -4,3 +4,18 @@
   outline: none;
   cursor: pointer;
 }
+
+$mockWidth: 1440;
+
+@mixin adaptiveFontSize($mockFontSize, $minFontSize) {
+  $desktopValue: $mockFontSize - $minFontSize;
+  $mobileValue: $desktopValue + $desktopValue * 0.7;
+
+  @media (max-width: 767px) {
+    font-size: calc(#{$minFontSize + px} + #{$mobileValue} * ((100vw - 320px) / #{$mockWidth}));
+  }
+
+  @media (min-width: 767px) {
+    font-size: calc(#{$minFontSize + px} + #{$desktopValue} * (100vw / #{$mockWidth}));
+  }
+}

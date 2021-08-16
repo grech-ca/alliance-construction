@@ -10,6 +10,7 @@ const Header: FC = () => {
         <Link href='/'>Главная</Link>
         <Link href='/projects'>Проекты</Link>
         <Link href='/portfolio'>Портфолио</Link>
+        <Link href='/designing'>Проектирование</Link>
         <Link href='/prices'>Цены</Link>
         <Link href='/contacts'>Контакты</Link>
       </nav>

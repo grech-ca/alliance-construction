@@ -1,15 +1,13 @@
 .btn {
-  border: none;
-  background: none;
-  outline: none;
   cursor: pointer;
-  padding: 10px;
-  border-radius: $round-md;
+  padding: 15px;
+  border-radius: $round-sm;
   min-height: 38px;
   min-width: 38px;
+  font-size: 20px;
 
   &.default {
-    background: $primary;
+    background: $gray;
   }
 
   &.alternate {

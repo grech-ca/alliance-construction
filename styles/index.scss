@@ -1,11 +1,14 @@
 @import 'variables';
 @import 'functions';
 @import 'mixins';
-
+@import 'null-styles';
 @import 'reset';
 @import 'common';
 @import 'link';
 @import 'header';
+@import 'footer';
+@import 'global';
+@import 'slider';
 @import 'landing';
 @import 'sidebar';
 @import 'projects';

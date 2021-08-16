@@ -1,0 +1,44 @@
+footer {
+  width: 100%;
+  display: flex;
+  padding: 50px 100px;
+  flex-direction: column;
+  background-color: #dedede;
+  @include adaptiveFontSize(20, 14);
+
+  .footer {
+    justify-content: space-between;
+    display: flex;
+
+    .navigation {
+      display: flex;
+      flex-direction: column;
+
+      a {
+        padding: 5px 0;
+      }
+    }
+
+    .contacts {
+      display: flex;
+      flex-direction: column;
+
+      .phone {
+        @include adaptiveFontSize(40, 18);
+        padding-bottom: 10px;
+      }
+
+      .email {
+        @include adaptiveFontSize(25, 14);
+      }
+    }
+  }
+
+  .instagram {
+    text-align: right;
+  }
+
+  .copyrights {
+    padding-top: 30px;
+  }
+}
