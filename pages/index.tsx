@@ -1,23 +1,46 @@
 import { FC } from 'react';
 
-import Header from 'components/common/Header';
+import { Container, Typography } from '@material-ui/core';
+
+import Layout from 'layouts/Layout';
+
+import Slider, { Slide } from 'components/common/Slider';
+import ProjectGallery, { Project } from 'components/common/ProjectGallery';
+
+import { About, AboutContent, AboutImage } from 'styles/Landing';
+
+const slides: Slide[] = [
+  {
+    image:
+      'https://images.unsplash.com/photo-1626937526107-ca0be0eecccd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyOTMwODM2OA&ixlib=rb-1.2.1&q=80&w=1080',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1627727997008-52d0fc4e1464?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyOTMwODQxNA&ixlib=rb-1.2.1&q=80&w=1080',
+  },
+  {
+    image:
+      'https://images.unsplash.com/photo-1626541743398-b2a732923a1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyOTMwODQyMw&ixlib=rb-1.2.1&q=80&w=1080',
+  },
+];
+
+const projects: Project[] = slides.map(({ image }, index) => ({ images: [image], id: index }));
 
 const HomePage: FC = () => (
-  <div className='landing'>
-    <Header />
-    <header className='container mx-auto flex'>
-      <div className='offer'>
-        <h1 className='text-5xl flex-1'>Строительство и проектирование домов</h1>
-        <div className='flex-1 h-1/2'>
-          <img
-            src='https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80'
-            alt=''
-            className='flex-1 h-full w-full object-cover rounded-3xl'
-          />
-        </div>
-      </div>
-    </header>
-  </div>
+  <Layout>
+    <Container>
+      <Typography>Реновация, строительство и проектирование домов</Typography>
+      <Typography>Более 10 выполненных проектов</Typography>
+    </Container>
+    <Slider slides={slides} />
+    <Container>
+      <ProjectGallery projects={projects} />
+    </Container>
+    <About>
+      <AboutContent>Blabla</AboutContent>
+      <AboutImage src='https://images.unsplash.com/photo-1626541743398-b2a732923a1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyOTMwODQyMw&ixlib=rb-1.2.1&q=80&w=1080' />
+    </About>
+  </Layout>
 );
 
 export default HomePage;

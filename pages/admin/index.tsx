@@ -1,11 +1,7 @@
 import { FC } from 'react';
 
-import Sidebar from 'admin/common/Sidebar';
+import Layout from 'layouts/Layout';
 
-const AdminHomePage: FC = () => (
-  <div className='page'>
-    <Sidebar />
-  </div>
-);
+const AdminHomePage: FC = ({ children }) => <Layout type='admin'>{children}</Layout>;
 
 export default AdminHomePage;

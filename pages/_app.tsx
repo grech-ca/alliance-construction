@@ -1,32 +1,34 @@
 import { FC } from 'react';
 
 import { AppProps } from 'next/app';
+import { ThemeProvider } from 'styled-components';
+import { MuiThemeProvider, CssBaseline } from '@material-ui/core';
+import Modal from 'react-modal';
 
 import { QueryClientProvider, QueryClient } from 'react-query';
 
-import Modal from 'react-modal';
-
 import ModalProvider from 'providers/ModalProvider';
 
-import 'styles/index.scss';
+import theme from 'startup/theme';
+
+import GlobalStyle from 'styles/Global';
 
 Modal.setAppElement('#__next');
 
 const client = new QueryClient();
 
-const App: FC<AppProps> = ({ Component, pageProps }) => {
-  return (
-    <QueryClientProvider client={client}>
-      <ModalProvider>
-        <Component {...pageProps} />
-        <style jsx>{`
-          :global(.js-focus-visible) :focus:not(.focus-visible) {
-            outline: none;
-          }
-        `}</style>
-      </ModalProvider>
-    </QueryClientProvider>
-  );
-};
+const App: FC<AppProps> = ({ Component, pageProps }) => (
+  <QueryClientProvider client={client}>
+    <ThemeProvider theme={theme}>
+      <MuiThemeProvider theme={theme}>
+        <ModalProvider>
+          <Component {...pageProps} />
+        </ModalProvider>
+        <CssBaseline />
+        <GlobalStyle />
+      </MuiThemeProvider>
+    </ThemeProvider>
+  </QueryClientProvider>
+);
 
 export default App;

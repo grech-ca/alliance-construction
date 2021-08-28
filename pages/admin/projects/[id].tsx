@@ -1,22 +1,9 @@
 import { FC } from 'react';
-import { useRouter } from 'next/router';
 
-import Head from 'next/head';
-
-import Sidebar from 'admin/common/Sidebar';
+import Layout from 'layouts/Layout';
 
 const AdminProjectPage: FC = () => {
-  const { query } = useRouter();
-  const { id } = query;
-
-  return (
-    <div className='page admin'>
-      <Head>
-        <title>Проект #{id}</title>
-      </Head>
-      <Sidebar />
-    </div>
-  );
+  return <Layout type='admin' />;
 };
 
 export default AdminProjectPage;
