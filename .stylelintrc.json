@@ -3,24 +3,17 @@
     "stylelint-prettier",
     "stylelint-declaration-use-variable",
     "stylelint-a11y",
-    "stylelint-high-performance-animation"
+    "stylelint-high-performance-animation",
+    "stylelint-order"
   ],
-  "extends": ["stylelint-config-sass-guidelines", "stylelint-prettier/recommended"],
+  "extends": ["stylelint-config-styled-components", "stylelint-prettier/recommended"],
   "rules": {
     "prettier/prettier": true,
-    "sh-waqar/declaration-use-variable": ["/color/", "font", "box-shadow", "transition", "font-family"],
-    "plugin/no-low-performance-animation-properties": [
-      true,
-      {
-        "ignore": "paint-properties"
-      }
-    ],
     "a11y/no-text-align-justify": true,
     "a11y/selector-pseudo-class-focus": true,
 
     "selector-pseudo-class-no-unknown": true,
     "selector-pseudo-element-no-unknown": true,
-    "selector-type-no-unknown": true,
 
     "function-name-case": "lower",
     "value-keyword-case": "lower",
@@ -31,6 +24,7 @@
     "order/properties-alphabetical-order": null,
     "declaration-property-value-disallowed-list": null,
     "time-min-milliseconds": 150,
+    "selector-class-pattern": null,
 
     "string-no-newline": true,
     "comment-no-empty": true,
