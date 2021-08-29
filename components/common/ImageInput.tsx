@@ -1,4 +1,4 @@
-import { FC, useCallback, useState, Fragment } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useField } from 'formik';
 import { useDropzone } from 'react-dropzone';
 
@@ -14,7 +14,7 @@ interface Props {
 const ImageInput: FC<Props> = ({ name, multiple }) => {
   const [active, setActive] = useState(false);
 
-  const [{ value }, meta, { setValue }] = useField(name);
+  const [{ value }, , { setValue }] = useField(name);
 
   const onDrop = useCallback(
     acceptedFiles => {

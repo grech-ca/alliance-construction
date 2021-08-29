@@ -1,12 +1,11 @@
 import { FC, useCallback } from 'react';
-import { useQuery, useMutation, QueryClient } from 'react-query';
 
 import { snakeCase } from 'lodash';
 
 import { Formik, Form } from 'formik';
 
 import Modal from 'components/common/Modal';
-import ImageInput from 'admin/common/ImageInput';
+import ImageInput from 'components/common/ImageInput';
 import Input from 'components/common/FormInput';
 
 import useModal from 'hooks/useModal';
@@ -30,8 +29,6 @@ const initialValues: CreateProjectValues = {
 };
 
 const CreateProject: FC = () => {
-  const { close } = useModal('CreateProject');
-
   const createPost = useCallback((values: CreateProjectValues) => {
     const formData = new FormData();
 

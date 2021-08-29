@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { FaBed, FaBuilding } from 'react-icons/fa';
 import { Formik, Form } from 'formik';
 
-import CreateProject from 'admin/project/CreateProject';
+import CreateProject from 'components/modals/CreateProject';
 
 import useModal from 'hooks/useModal';
 
