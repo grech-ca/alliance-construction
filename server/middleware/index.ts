@@ -1,9 +1,9 @@
-import nextConnect from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 
-import parseMultipartForm from './parseMultipartForm';
+import parseMultipartForm from 'server/middleware/parseMultipartForm';
 
-const middleware = nextConnect();
+export type Middleware = (req: NextApiRequest, res: NextApiResponse, next: (error?: Error) => void) => void;
 
-middleware.use(parseMultipartForm);
+const commonMiddlewares = [parseMultipartForm];
 
-export default middleware;
+export default commonMiddlewares;

@@ -1,8 +1,10 @@
 import formidable from 'formidable';
 
+import { Middleware } from 'server/middleware';
+
 const form = formidable({ multiples: true });
 
-const parseMultipartForm = (req: any, res: any, next: any) => {
+const parseMultipartForm: Middleware = (req, res, next) => {
   const contentType = req.headers['content-type'];
 
   if (contentType && contentType.indexOf('multipart/form-data') !== -1) {
