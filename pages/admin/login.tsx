@@ -1,11 +1,20 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
+
+import { useRouter } from 'next/router';
+
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import * as yup from 'yup';
+import cookie from 'cookie';
 
 import { NextPage } from 'next';
-
+import Head from 'next/head';
 import { Formik, FormikProps } from 'formik';
-import { TextField } from '@material-ui/core';
 
-import * as yup from 'yup';
+import LoadingOverlay from 'components/common/LoadingOverlay';
+
+import { login } from 'helpers/http';
+
+import { StyledLoginPage, Form, Heading, Field, Submit, FormWrapper } from 'styles/Login';
 
 interface LoginValues {
   password: string;
@@ -20,16 +29,49 @@ const validationSchema = yup.object().shape({
 });
 
 const LoginPage: NextPage = () => {
-  const handleSubmit = useCallback((values: LoginValues) => {
-    console.log(values);
-  }, []);
+  const { push } = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = useCallback(
+    async ({ password }: LoginValues) => {
+      setIsLoading(true);
+
+      try {
+        await login(password);
+
+        void push('/admin');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [push],
+  );
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-      {({ values, setFieldValue }: FormikProps<LoginValues>) => (
-        <TextField value={values.password} onChange={event => setFieldValue('password', event.target.value)} />
-      )}
-    </Formik>
+    <StyledLoginPage>
+      <Head>
+        <title>Вход</title>
+      </Head>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+        {({ values, setFieldValue, handleSubmit }: FormikProps<LoginValues>) => (
+          <FormWrapper>
+            <Form onSubmit={handleSubmit}>
+              <Heading>Панель администратора</Heading>
+              <Field
+                autoFocus
+                label='Пароль'
+                type='password'
+                value={values.password}
+                onChange={event => setFieldValue('password', event.target.value)}
+              />
+              <Submit>Войти</Submit>
+            </Form>
+            {isLoading && <LoadingOverlay />}
+          </FormWrapper>
+        )}
+      </Formik>
+    </StyledLoginPage>
   );
 };
 

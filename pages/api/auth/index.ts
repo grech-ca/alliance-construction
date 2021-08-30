@@ -5,6 +5,14 @@ import AdminConfig from 'server/models/adminConfig';
 
 import handler from 'server/handler';
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '1mb',
+    },
+  },
+};
+
 const authHandler = handler().post(async (req, res) => {
   const [passwordConfig] = await AdminConfig.findOrCreate({
     where: { key: 'password' },
@@ -18,13 +26,16 @@ const authHandler = handler().post(async (req, res) => {
 
   if (!passwordsMatch) return res.status(400).send('Invalid password');
 
-  const accessToken = jwt.sign({}, process.env.JWT_SECRET, { expiresIn: '15m' });
-  const refreshToken = jwt.sign({}, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+  const accessToken = jwt.sign({}, process.env.JWT_SECRET);
 
-  res.send({
-    accessToken,
-    refreshToken,
-  });
+  // const accessToken = jwt.sign({}, process.env.JWT_SECRET, { expiresIn: '15m' });
+  // const refreshToken = jwt.sign({}, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' });
+
+  res.status(200).send({ accessToken });
+  // res.send({
+  //   accessToken,
+  //   refreshToken,
+  // });
 });
 
 export default authHandler;

@@ -10,13 +10,16 @@ export type GuardMiddleware = (...methods: Method[]) => Middleware;
 const guard: GuardMiddleware =
   (...methods) =>
   (req, res, next) => {
+    const methodProtected = methods.includes(req.method as Method);
+
+    if (!methodProtected) return next();
+
     if (req.headers.cookie) {
       const { authorization } = cookie.parse(req.headers.cookie);
 
       const tokenVerified = authorization && jwt.verify(authorization, process.env.JWT_SECRET);
-      const methodAllowed = methods.includes(req.method as Method);
 
-      if (tokenVerified && methodAllowed) return next();
+      if (tokenVerified) return next();
     }
 
     res.status(403).send('Access denied');

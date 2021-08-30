@@ -16,8 +16,8 @@
     "selector-pseudo-element-no-unknown": true,
 
     "function-name-case": "lower",
-    "value-keyword-case": "lower",
-
+    
+    "value-keyword-case": null,
     "max-nesting-depth": null,
     "selector-max-id": null,
     "selector-max-compound-selectors": null,

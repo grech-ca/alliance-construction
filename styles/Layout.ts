@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { alpha } from '@material-ui/core/styles';
+
 import { Typography } from '@material-ui/core';
 
 export const StyledLayout = styled.div({
@@ -13,3 +15,16 @@ export const Heading = styled(Typography).attrs({ variant: 'h4', component: 'h1'
   marginTop: theme.spacing(3),
   marginBottom: theme.spacing(5),
 }));
+
+export const StyledLoadingOverlay = styled.div({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  height: '100%',
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: alpha('#fff', 0.9),
+  zIndex: 10,
+});

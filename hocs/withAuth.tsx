@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import cookie from 'cookie';
 import { clone } from 'lodash';
+import nextCookie from 'next-cookies';
 
 import { NextPage, NextPageContext } from 'next';
 import redirect from 'helpers/redirect';
@@ -9,14 +9,9 @@ const withAuth = (Component: NextPage): NextPage => {
   const OldComponent = clone(Component);
 
   Component.getInitialProps = (ctx: NextPageContext) => {
-    const { req } = ctx;
+    const { authorization } = nextCookie(ctx);
 
-    if (!req.headers.cookie) {
-      redirect(ctx, '/admin/login');
-      return {};
-    }
-
-    const { authorization } = cookie.parse(req.headers.cookie);
+    console.log(authorization);
 
     if (!authorization) {
       redirect(ctx, '/admin/login');
@@ -28,7 +23,7 @@ const withAuth = (Component: NextPage): NextPage => {
 
       if (OldComponent.getInitialProps) return OldComponent.getInitialProps(ctx);
       return {};
-    } catch {
+    } catch (err) {
       redirect(ctx, '/admin/login');
     }
 
