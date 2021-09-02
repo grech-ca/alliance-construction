@@ -5,7 +5,7 @@ import NextHead from 'next/head';
 import UserLayout from 'layouts/UserLayout';
 import AdminLayout from 'layouts/AdminLayout';
 
-interface LayoutProps {
+export interface LayoutProps {
   type?: LayoutType;
   pageTitle?: string;
 }
@@ -19,7 +19,9 @@ const layouts: Layouts = {
   admin: AdminLayout,
 };
 
-const Layout: FC<LayoutProps> = ({ pageTitle = 'СК "Альянс"', type = 'user', children }) => {
+const Layout: FC<LayoutProps> = ({ children, ...props }) => {
+  const { pageTitle = 'СК "Альянс"', type = 'user' } = props;
+
   const LayoutComponent = layouts[type];
 
   return (
@@ -27,7 +29,7 @@ const Layout: FC<LayoutProps> = ({ pageTitle = 'СК "Альянс"', type = 'us
       <NextHead>
         <title>{pageTitle}</title>
       </NextHead>
-      <LayoutComponent>{children}</LayoutComponent>
+      <LayoutComponent {...props}>{children}</LayoutComponent>
     </Fragment>
   );
 };

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { alpha } from '@material-ui/core/styles';
 
-import { Typography } from '@material-ui/core';
+import { Typography, Drawer } from '@material-ui/core';
 
 export const StyledLayout = styled.div({
   flex: 1,

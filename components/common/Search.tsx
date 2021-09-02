@@ -1,7 +1,7 @@
 import { FC, useCallback } from 'react';
 import { useField } from 'formik';
 
-import { GrSearch } from 'react-icons/gr';
+import SearchIcon from '@material-ui/icons/Search';
 
 interface SearchProps {
   name: string;
@@ -17,7 +17,7 @@ const Search: FC<SearchProps> = ({ name, formatter = value => value, placeholder
   return (
     <div className='input search'>
       <input type='text' value={value} onChange={handleChange} placeholder={placeholder} className='input-field' />
-      <GrSearch size={18} />
+      <SearchIcon />
     </div>
   );
 };

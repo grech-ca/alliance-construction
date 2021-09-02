@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import ReactModal from 'react-modal';
-import { GrClose } from 'react-icons/gr';
+import CloseIcon from '@material-ui/icons/Close';
 
 import { ModalName } from 'providers/ModalProvider';
 
@@ -27,7 +27,7 @@ const Modal: FC<ModalProps> = ({ name, label, children }) => {
         <div className='modal-header'>
           {label && <span className='modal-title'>{label}</span>}
           <button className='close' onClick={close}>
-            <GrClose className='close-icon' size={20} />
+            <CloseIcon className='close-icon' />
           </button>
         </div>
         {children}

@@ -4,7 +4,6 @@ import plural from 'plural-ru';
 import queryString from 'query-string';
 
 import Link from 'next/link';
-import { FaBed, FaBuilding } from 'react-icons/fa';
 import { Formik, Form } from 'formik';
 
 import CreateProject from 'components/modals/CreateProject';
@@ -38,7 +37,7 @@ const AdminProjectsPage: FC = () => {
   }, [fetchProjects]);
 
   return (
-    <Layout type='admin'>
+    <Layout type='admin' pageTitle='Проекты'>
       <div className='projects-bar'>
         <Formik initialValues={{}} onSubmit={console.log}>
           <Form>
@@ -59,11 +58,11 @@ const AdminProjectsPage: FC = () => {
                 <h3 className='project-name'>Проект №{id}</h3>
                 <ul className='project-features'>
                   <li className='project-feature'>
-                    <FaBed />
+                    {/* <FaBed /> */}
                     {plural(bedrooms, '%d спальня', '%d спальни', '%d спален')}
                   </li>
                   <li className='project-feature'>
-                    <FaBuilding />
+                    {/* <FaBuilding /> */}
                     {plural(floors, '%d этаж', '%d этажа', '%d этажей')}
                   </li>
                 </ul>

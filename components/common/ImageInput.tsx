@@ -4,7 +4,7 @@ import { useDropzone } from 'react-dropzone';
 
 import classNames from 'classnames';
 
-import { GrDownload } from 'react-icons/gr';
+import UploadIcon from '@material-ui/icons/SystemUpdate';
 
 interface Props {
   name: string;
@@ -40,7 +40,7 @@ const ImageInput: FC<Props> = ({ name, multiple }) => {
       <input {...getInputProps()} />
       {value.length === 0 ? (
         <div className='dropzone'>
-          <GrDownload size={32} className='drop-icon' />
+          <UploadIcon />
           <div className='drop-hint'>Нажмите или перетащите изображения</div>
         </div>
       ) : (

@@ -2,7 +2,7 @@ import { FC, ImgHTMLAttributes, useCallback, useState } from 'react';
 
 import classnames from 'classnames';
 
-import { GrImage } from 'react-icons/gr';
+import ImageIcon from '@material-ui/icons/CropOriginal';
 
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   fallbackClassName?: string;
@@ -16,7 +16,7 @@ const Image: FC<ImageProps> = ({ className, fallbackClassName, ...props }) => {
   if (failed) {
     return (
       <div className={classnames('image fallback', fallbackClassName)}>
-        <GrImage size={40} />
+        <ImageIcon />
       </div>
     );
   }
