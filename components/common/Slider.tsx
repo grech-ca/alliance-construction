@@ -1,7 +1,8 @@
 import { FC, useState, useCallback } from 'react';
 
 import { Container } from '@material-ui/core';
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import LeftIcon from '@material-ui/icons/ArrowBackIos';
+import RightIcon from '@material-ui/icons/ArrowForwardIos';
 
 import { StyledSlider, Image, Header, Content, Control, ControlIcon, ControlButton } from 'styles/Slider';
 
@@ -33,10 +34,10 @@ const Slider: FC<SliderProps> = ({ slides }) => {
           <Header>
             <Control>
               <ControlButton onClick={prevSlide}>
-                <ControlIcon as={MdChevronLeft} />
+                <ControlIcon as={LeftIcon} />
               </ControlButton>
               <ControlButton onClick={nextSlide}>
-                <ControlIcon as={MdChevronRight} />
+                <ControlIcon as={RightIcon} />
               </ControlButton>
             </Control>
           </Header>

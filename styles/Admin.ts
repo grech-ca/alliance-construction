@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { AppBar, IconButton, Drawer } from '@material-ui/core';
+import { AppBar, IconButton, Drawer, Paper } from '@material-ui/core';
 
 export const DRAWER_WIDTH = 240;
 
@@ -54,3 +54,9 @@ export const Main = styled.main(({ theme }) => ({
 }));
 
 export const SidebarIcon = styled.svg({});
+
+export const MapContainer = styled(Paper)({
+  width: '100%',
+  height: 400,
+  overflow: 'hidden',
+});
