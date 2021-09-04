@@ -1,6 +1,8 @@
+import { ComponentProps } from 'react';
+
 import styled from 'styled-components';
 
-import { AppBar, IconButton, Drawer, Paper } from '@material-ui/core';
+import { AppBar, IconButton, Drawer, Paper, InputBase } from '@material-ui/core';
 
 export const DRAWER_WIDTH = 240;
 
@@ -59,4 +61,38 @@ export const MapContainer = styled(Paper)({
   width: '100%',
   height: 400,
   overflow: 'hidden',
+});
+
+export const InformationForm = styled.form({
+  width: 600,
+});
+
+export const StyledProjectsFilter = styled.div(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(3),
+  flexWrap: 'wrap',
+}));
+
+export const Search = styled.div(({ theme }) => ({
+  display: 'inline-flex',
+  background: '#ececec',
+  borderRadius: 4,
+  padding: theme.spacing(0.5, 1),
+  alignItems: 'center',
+  transition: '.2s ease-in-out',
+  width: 180,
+
+  ':focus, :hover': {
+    backgroundColor: '#f3f3f3',
+  },
+}));
+
+export const SearchIcon = styled.svg(({ theme }) => ({
+  marginRight: theme.spacing(1),
+  color: '#999',
+}));
+
+export const SearchInput = styled(InputBase)({
+  flex: 1,
 });

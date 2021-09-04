@@ -9,6 +9,8 @@ import { Grid, TextField, Button } from '@material-ui/core';
 
 import Layout from 'layouts/Layout';
 
+import { InformationForm } from 'styles/Admin';
+
 interface InformationValues {
   phone: string;
   address: string;
@@ -49,40 +51,42 @@ const InformationPage: NextPage = () => {
     <Layout type='admin' pageTitle='Информация'>
       <Formik validationSchema={validatioSchema} initialValues={initialValues} onSubmit={handleSubmit}>
         {({ handleSubmit }: FormikProps<InformationValues>) => (
-          <Grid container component='form' spacing={2} onSubmit={handleSubmit}>
-            <Grid item>
-              <TextField label='Наименование' />
+          <InformationForm onSubmit={handleSubmit}>
+            <Grid container spacing={2} justifyContent='center'>
+              <Grid item>
+                <TextField label='Наименование' />
+              </Grid>
+              <Grid item>
+                <TextField label='Телефон' />
+              </Grid>
+              <Grid item>
+                <TextField label='Почта' />
+              </Grid>
+              <Grid item>
+                <TextField label='ИНН / КПП' />
+              </Grid>
+              <Grid item>
+                <TextField label='БИК' />
+              </Grid>
+              <Grid item>
+                <TextField label='Директор' />
+              </Grid>
+              <Grid item>
+                <TextField label='Банк получателя' />
+              </Grid>
+              <Grid item>
+                <TextField label='Рассчетный счет' />
+              </Grid>
+              <Grid item>
+                <TextField label='Юридический адрес' />
+              </Grid>
+              <Grid item lg={12}>
+                <Button fullWidth variant='contained' color='primary' type='submit'>
+                  Сохранить
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <TextField label='Телефон' />
-            </Grid>
-            <Grid item>
-              <TextField label='Почта' />
-            </Grid>
-            <Grid item>
-              <TextField label='ИНН / КПП' />
-            </Grid>
-            <Grid item>
-              <TextField label='БИК' />
-            </Grid>
-            <Grid item>
-              <TextField label='Директор' />
-            </Grid>
-            <Grid item>
-              <TextField label='Банк получателя' />
-            </Grid>
-            <Grid item>
-              <TextField label='Рассчетный счет' />
-            </Grid>
-            <Grid item>
-              <TextField label='Юридический адрес' />
-            </Grid>
-            <Grid item lg={12}>
-              <Button fullWidth variant='contained' color='primary' type='submit'>
-                Сохранить
-              </Button>
-            </Grid>
-          </Grid>
+          </InformationForm>
         )}
       </Formik>
     </Layout>
