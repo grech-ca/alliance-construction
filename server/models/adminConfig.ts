@@ -1,26 +1,16 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
 import sequelize from 'server/sequelize';
 
-class AdminConfig extends Model {
-  key: string;
-  value: string;
-}
-
-AdminConfig.init(
-  {
-    key: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true,
-    },
-    value: {
-      type: DataTypes.STRING,
-    },
+const AdminConfig = sequelize.define('AdminConfig', {
+  key: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    primaryKey: true,
   },
-  { sequelize },
-);
-
-void AdminConfig.sync();
+  value: {
+    type: DataTypes.STRING,
+  },
+});
 
 export default AdminConfig;

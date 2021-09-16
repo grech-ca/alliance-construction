@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  db:
+  database:
     container_name: alliance_construction
     image: mysql:5.7
     restart: always
@@ -20,7 +20,7 @@ services:
       - '3306'
       # Where our data will be persisted
     volumes:
-      - my-db:/var/lib/mysql
+      - alliance-db:/var/lib/mysql
 # Names our volume
 volumes:
-  my-db:
+  alliance-db:

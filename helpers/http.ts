@@ -1,6 +1,8 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 
+import { ProjectModel } from 'server/models/project';
+
 axios.interceptors.request.use(
   config => config,
   error => {
@@ -19,6 +21,20 @@ export const login = async (password: string): Promise<void> => {
   } = await axios.post<AuthResponse>('/api/auth', { password });
 
   cookie.set('authorization', accessToken);
+};
+
+export interface GetProjectsData {
+  page: number;
+  total: number;
+  data: ProjectModel[];
+}
+
+export const getProjects = async (query?: string): Promise<GetProjectsData> => {
+  const { data: projectsData } = await axios.get<GetProjectsData>(
+    `http://localhost:3000/api/projects${query ? `?${query}` : ''}`,
+  );
+
+  return projectsData;
 };
 
 // export const login = async (password: string): Promise<void> => {

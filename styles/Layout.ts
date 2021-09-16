@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { alpha } from '@material-ui/core/styles';
 
-import { Typography, Drawer } from '@material-ui/core';
+import { Typography, Drawer, LinearProgress } from '@material-ui/core';
 
 export const StyledLayout = styled.div({
   flex: 1,
@@ -27,4 +27,12 @@ export const StyledLoadingOverlay = styled.div({
   justifyContent: 'center',
   backgroundColor: alpha('#fff', 0.9),
   zIndex: 10,
+});
+
+export const PageProgress = styled(LinearProgress)({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  zIndex: 2000,
 });

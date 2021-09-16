@@ -1,39 +1,50 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes, ModelDefined } from 'sequelize';
 
 import sequelize from 'server/sequelize';
 
-class Project extends Model {}
+import Image from 'server/models/image';
+import Resource from 'server/models/resource';
 
-Project.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
-    type: {
-      type: DataTypes.ENUM('EXEMPLARY', 'INDIVIDUAL'),
-      allowNull: false,
-    },
-    floors: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    price: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    buildPrice: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    bedrooms: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+import { ProjectType, Area } from 'types/shared';
+
+export interface ProjectModel {
+  id: number;
+  type: ProjectType;
+  floors: number;
+  price: number;
+  buildPrice: number;
+  bedrooms: number;
+  area: Area;
+}
+
+const Project: ModelDefined<ProjectModel, ProjectModel> = sequelize.define('Project', {
+  type: {
+    type: DataTypes.ENUM(...Object.values(ProjectType)),
+    allowNull: false,
   },
-  { sequelize },
-);
+  floors: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  price: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  buildPrice: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  bedrooms: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  area: {
+    type: DataTypes.ENUM(...Object.values(Area)),
+    allowNull: false,
+  },
+});
 
-void Project.sync();
+Project.hasMany(Image, { as: 'images' });
+Project.hasMany(Resource, { as: 'resources' });
+
+export default Project;

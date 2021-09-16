@@ -1,97 +1,115 @@
-import fs from 'fs';
-
-import { omit } from 'lodash';
-
-import sql from 'helpers/sql';
-import sqlValues from 'helpers/sqlValues';
-import sqlWhere from 'helpers/sqlWhere';
-
-import extractBufferData from 'helpers/extractBufferData';
+import * as yup from 'yup';
+import { compact } from 'lodash';
+import { Op, Model } from 'sequelize';
 
 import handler from 'server/handler';
 
-interface ProjectsImageRelation {
-  image: number;
-  project: number;
+import Project, { ProjectModel } from 'server/models/project';
+
+import { ProjectType, Area } from 'types/shared';
+
+export interface GetProjectsResponse {
+  page: number;
+  total: number;
+  data: Model<ProjectModel>[];
 }
-export interface Project {
-  id: number;
-  bedrooms: number;
-  price: number;
-  build_price: number;
-  type: string;
-  floors: number;
-  images: number[];
-}
+
+const createProjectValidation = yup.object().shape({
+  bedrooms: yup.number().required(),
+  price: yup.number().required(),
+  buildPrice: yup.number().required(),
+  type: yup.string().oneOf(Object.values(ProjectType)).required(),
+  area: yup.string().oneOf(Object.values(Area)).required(),
+  floors: yup.number().required(),
+});
+
+// const projectsHandler = handler({ guard: ['POST'] }).post(async (req, res) => {
+const projectsHandler = handler()
+  .get(async (req, res) => {
+    const { query } = req ?? {};
+
+    const search = query?.search;
+    const type = query?.type;
+    const area = query?.area;
+    const page = Number(query?.page) > 0 ? Number(query?.page) : 1;
+    const limit = Number(query?.limit) > 0 ? Number(query?.limit) : 12;
+    const floors = query?.floors;
+
+    const selector = {
+      [Op.and]: compact([
+        type && { type },
+        area && { area },
+        search && {
+          id: {
+            [Op.like]: `%${search as string}`,
+          },
+        },
+        floors && { floors },
+      ]),
+    };
+
+    const projectsCount = await Project.count({ where: selector });
+
+    const projects = await Project.findAll({
+      limit,
+      where: selector,
+      offset: limit * (page - 1),
+    });
+
+    const data: GetProjectsResponse = {
+      page,
+      total: Math.ceil(projectsCount / limit),
+      data: projects,
+    };
+
+    res.send(data);
+  })
+  .post(async (req, res) => {
+    try {
+      await createProjectValidation.validate(req.body, { abortEarly: false });
+    } catch (err) {
+      return res.status(403).json(err);
+    }
+
+    const project = await Project.create(req.body);
+
+    // const photos = Array.isArray(req.body.photos) ? req.body.photos : [req.body.photos];
+
+    res.send(project);
+
+    // if (photos) {
+    //   const photosPromises = photos.map((photo: any) => {
+    //     return new Promise(resolve => {
+    //       return fs.readFile(photo.path, (err, buffer) => resolve(buffer));
+    //     });
+    //   });
+
+    //   await Promise.all(photosPromises).then(photos => {
+    //     const photoIds = photos.map(photo => {
+    //       return new Promise(resolve => {
+    //         void sql`INSERT INTO files ${sqlValues({
+    //           type: 'image',
+    //           data: JSON.stringify(extractBufferData(photo as Buffer)),
+    //         })}`.then(({ insertId }: any) => resolve(insertId));
+    //       });
+    //     });
+
+    //     void Promise.all(photoIds).then(photos => {
+    //       photos.forEach(photoId => {
+    //         sql`INSERT INTO projects_images_relation ${sqlValues({
+    //           project: projectId,
+    //           image: photoId as number,
+    //         })}`;
+    //       });
+    //     });
+    //   });
+    // }
+  });
 
 export const config = {
   api: {
     bodyParser: false,
   },
 };
-
-const projectsHandler = handler({ guard: ['POST'] })
-  .get(async (req, res) => {
-    const search = req.query.search as string;
-
-    const projects = await sql<Project[]>`SELECT * FROM projects ${
-      search ? sqlWhere({ id: { $like: `${search}%` } }) : ''
-    };`;
-
-    const projectsWithPhotos = projects.map(project => {
-      return new Promise(resolve => {
-        void sql<ProjectsImageRelation[]>`SELECT image FROM projects_images_relation WHERE project=${project.id}`.then(
-          images => {
-            resolve({
-              ...project,
-              images: images.map(({ image }) => image),
-            });
-          },
-        );
-      });
-    });
-
-    void Promise.all(projectsWithPhotos).then(data => res.json(data));
-  })
-  .post(async (req, res) => {
-    const { insertId: projectId } = await sql`INSERT INTO projects ${sqlValues(omit(req.body, 'photos'))}`;
-    const projects = await sql<Project[]>`SELECT * FROM projects WHERE id = ${projectId}`;
-
-    const photos = Array.isArray(req.body.photos) ? req.body.photos : [req.body.photos];
-
-    if (photos) {
-      const photosPromises = photos.map((photo: any) => {
-        return new Promise(resolve => {
-          return fs.readFile(photo.path, (err, buffer) => resolve(buffer));
-        });
-      });
-
-      await Promise.all(photosPromises).then(photos => {
-        const photoIds = photos.map(photo => {
-          return new Promise(resolve => {
-            void sql`INSERT INTO files ${sqlValues({
-              type: 'image',
-              data: JSON.stringify(extractBufferData(photo as Buffer)),
-            })}`.then(({ insertId }: any) => resolve(insertId));
-          });
-        });
-
-        void Promise.all(photoIds).then(photos => {
-          photos.forEach(photoId => {
-            sql`INSERT INTO projects_images_relation ${sqlValues({
-              project: projectId,
-              image: photoId as number,
-            })}`;
-          });
-        });
-      });
-    }
-
-    if (!projects.length) {
-      res.status(404);
-    }
-
-    res.json(projects[0]);
-  });
 
 export default projectsHandler;

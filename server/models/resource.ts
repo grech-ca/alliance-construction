@@ -1,24 +1,23 @@
-import { Model, DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
 import sequelize from 'server/sequelize';
 
-class Resource extends Model {}
+import ResourceAdvantage from 'server/models/resoucreAdvantage';
 
-Resource.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
-    name: {
-      type: DataTypes.CHAR,
-      allowNull: false,
-    },
-    image: DataTypes.BLOB('medium'),
+const Resource = sequelize.define('Resource', {
+  // id: {
+  //   type: DataTypes.INTEGER,
+  //   primaryKey: true,
+  //   autoIncrement: true,
+  //   allowNull: false,
+  // },
+  name: {
+    type: DataTypes.CHAR,
+    allowNull: false,
   },
-  { sequelize },
-);
+  image: DataTypes.BLOB,
+});
+
+// Resource.hasMany(ResourceAdvantage, { as: 'advantages' });
 
 export default Resource;

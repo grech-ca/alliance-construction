@@ -1,6 +1,6 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 
-import { without } from 'lodash';
+import { uniq, compact, without } from 'lodash';
 
 import { Button } from '@material-ui/core';
 
@@ -21,21 +21,35 @@ interface OptionsInputProps {
 type HandleOption = (option: InputOption['value']) => void;
 
 const OptionsInput: FC<OptionsInputProps> = ({ value, onChange, options, multiple }) => {
+  const singleValue = useMemo(() => {
+    const extracted = multiple && Array.isArray(value) ? (value as unknown[])[0] : value;
+
+    if (!value) return value;
+    return typeof options[0].value === 'string' ? String(extracted) : Number(extracted);
+  }, [multiple, options, value]);
+
+  const multipleValue = useMemo<unknown[]>(
+    () =>
+      (multiple && compact(Array.isArray(value) ? value : [value]))?.map(optionValue =>
+        typeof options[0].value === 'string' ? String(optionValue) : Number(optionValue),
+      ) ?? [],
+    [multiple, options, value],
+  );
+
   const handleOption = useCallback<HandleOption>(
     optionValue => {
       if (!multiple) return onChange(optionValue);
-      if (Array.isArray(value)) {
-        if (value.includes(optionValue)) return onChange(without(value, optionValue));
-        return onChange([...value, optionValue]);
-      }
+
+      if (multipleValue.includes(optionValue)) return onChange(compact(without(multipleValue, optionValue)));
+      return onChange(compact(uniq([...multipleValue, optionValue])));
     },
-    [multiple, onChange, value],
+    [multiple, multipleValue, onChange],
   );
 
   return (
     <StyledOptionsInput>
       {options.map(({ label, value: optionValue }) => {
-        const selected = multiple ? Array.isArray(value) && value.includes(optionValue) : value === optionValue;
+        const selected = multiple ? multipleValue.includes(optionValue) : singleValue === optionValue;
 
         return (
           <Button

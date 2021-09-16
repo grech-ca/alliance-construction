@@ -1,52 +1,44 @@
-import { FC, useState, useEffect, useCallback } from 'react';
+import { useCallback, ChangeEvent } from 'react';
 
+import { useRouter } from 'next/router';
+
+import queryString from 'query-string';
+
+import { NextPage } from 'next';
 import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 
-import plural from 'plural-ru';
-import queryString from 'query-string';
-
-import Link from 'next/link';
-import { Formik, Form } from 'formik';
-
-import CreateProject from 'components/modals/CreateProject';
-
-import useModal from 'hooks/useModal';
-
-import { Project } from 'pages/api/projects';
+import { getProjects, GetProjectsData } from 'helpers/http';
 
 import Layout from 'layouts/Layout';
 
-import Image from 'components/common/Image';
-import Search from 'components/common/Search';
 import ProjectsFilter from 'components/admin/ProjectsFilter';
 
-const numericOnly = (value: string, prev: string) => (isNaN(value as unknown as number) ? prev : value);
+interface AdminProjectsPageProps extends GetProjectsData {}
 
-const AdminProjectsPage: FC = () => {
-  const { open } = useModal('CreateProject');
+const AdminProjectsPage: NextPage<AdminProjectsPageProps> = ({ total, page, data }) => {
+  const { push, query, pathname } = useRouter();
 
-  const [projects, setProjects] = useState<Project[]>([]);
-
-  const fetchProjects = useCallback((params?: Record<string, string>) => {
-    void fetch(`/api/projects${params && Object.keys(params).length ? `?${queryString.stringify(params)}` : ''}`)
-      .then(res => res.json())
-      .then((projectsData: Project[]) => {
-        setProjects(projectsData);
+  const handlePageChange = useCallback(
+    async (event: ChangeEvent<unknown>, page: number) => {
+      await push({
+        pathname,
+        query: {
+          ...query,
+          page,
+        },
       });
-  }, []);
-
-  useEffect(() => {
-    void fetchProjects();
-  }, [fetchProjects]);
+    },
+    [pathname, push, query],
+  );
 
   return (
     <Layout type='admin' pageTitle='Проекты'>
       <ProjectsFilter />
       <Grid container spacing={4}>
         <Grid item container spacing={2}>
-          {Array.from(Array(12).keys()).map(key => (
-            <Grid key={key} item xs={6} md={6} lg={3} xl={2}>
+          {data?.map(({ id }) => (
+            <Grid key={id} item xs={6} md={6} lg={3} xl={2}>
               <Card>
                 <CardActionArea>
                   <CardMedia
@@ -55,7 +47,7 @@ const AdminProjectsPage: FC = () => {
                   />
                   <CardContent>
                     <Typography gutterBottom variant='h6' component='h2'>
-                      Проект #{`${key}${String(Math.PI).slice(-2)}`}
+                      Проект #{id}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -63,12 +55,20 @@ const AdminProjectsPage: FC = () => {
             </Grid>
           ))}
         </Grid>
-        <Grid item container justifyContent='flex-end'>
-          <Pagination count={10} shape='rounded' />
-        </Grid>
+        {total > 1 && (
+          <Grid item container justifyContent='flex-end'>
+            <Pagination page={page} onChange={handlePageChange} count={total} shape='rounded' />
+          </Grid>
+        )}
       </Grid>
     </Layout>
   );
+};
+
+AdminProjectsPage.getInitialProps = async ({ query }) => {
+  const data = await getProjects(queryString.stringify(query));
+
+  return data;
 };
 
 export default AdminProjectsPage;
