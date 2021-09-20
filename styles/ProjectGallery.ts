@@ -11,15 +11,16 @@ export const StyledProjectGallery = styled.div({
 
 export const Header = styled.div({});
 
-export const Content = styled.div({
+export const Content = styled.div(({ theme }) => ({
   display: 'flex',
+  margin: theme.spacing(2, 0),
 
   [StyledSlider]: {
     flex: 3,
     height: 300,
     maxWidth: 550,
   },
-});
+}));
 
 export const Info = styled.div({
   flex: 2,
@@ -32,25 +33,26 @@ export const PortfolioLink = styled(Link)({});
 export const ProjectSelect = styled.div(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
-  margin: theme.spacing(2, -2),
+  margin: theme.spacing(2, 0),
+  gap: theme.spacing(2),
 }));
 
 interface ProjectSelectItemProps {
   $active?: boolean;
 }
 
-export const ProjectSelectItem = styled(ButtonBase)<ProjectSelectItemProps>(({ theme, $active }) => ({
+export const ProjectSelectItem = styled(ButtonBase)<ProjectSelectItemProps>(({ $active }) => ({
   height: 150,
   maxWidth: 200,
   position: 'relative',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  margin: theme.spacing(2),
   overflow: 'hidden',
   borderRadius: 8,
   transition: '.2s ease',
   transform: `perspective(1px) translateZ(${$active ? 0.05 : 0}px)`,
+  flex: 1,
 }));
 
 export const ProjectSelectItemImage = styled.img({

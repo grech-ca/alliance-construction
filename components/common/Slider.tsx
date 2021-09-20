@@ -1,4 +1,4 @@
-import { FC, useState, useCallback } from 'react';
+import { FC, useState, useCallback, CSSProperties } from 'react';
 
 import { Container } from '@material-ui/core';
 import LeftIcon from '@material-ui/icons/ArrowBackIos';
@@ -14,9 +14,10 @@ export interface Slide {
 interface SliderProps {
   slides: Slide[];
   autoSlide?: boolean;
+  objectFit?: CSSProperties['objectFit'];
 }
 
-const Slider: FC<SliderProps> = ({ slides }) => {
+const Slider: FC<SliderProps> = ({ slides, objectFit }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slide = slides[currentSlide];
@@ -44,7 +45,7 @@ const Slider: FC<SliderProps> = ({ slides }) => {
         )}
       </Container>
       <Content>
-        <Image src={slide.image} />
+        <Image src={slide.image} objectFit={objectFit} />
       </Content>
     </StyledSlider>
   );

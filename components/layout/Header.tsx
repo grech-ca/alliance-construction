@@ -18,15 +18,15 @@ const Header: FC = () => {
       <HeaderToolbar>
         <Container>
           <HeaderNavigation>
-            <HeaderLogo>Альянс</HeaderLogo>
+            <HeaderLogo>СК «Альянс»</HeaderLogo>
             <Links>
               <HeaderLink href='/'>Главная</HeaderLink>
               <HeaderLink href='/projects'>Проекты</HeaderLink>
               <HeaderLink href='/portfolio'>Портфолио</HeaderLink>
-              <HeaderLink href='/prices'>Цены</HeaderLink>
+              {/* <HeaderLink href='/prices'>Цены</HeaderLink> */}
               <HeaderLink href='/contacts'>Контакты</HeaderLink>
             </Links>
-            <HeaderPhone href='tel:89508575991'>8 (950) 857-59-91</HeaderPhone>
+            <HeaderPhone href='tel:89614079777'>8 (961) 407-97-77</HeaderPhone>
           </HeaderNavigation>
         </Container>
       </HeaderToolbar>

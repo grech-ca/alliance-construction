@@ -1,19 +1,16 @@
 import { FC, useState } from 'react';
 
-import { Typography } from '@material-ui/core';
+import Link from 'next/link';
+import { Typography, Box, Button } from '@material-ui/core';
 
 import Slider from 'components/common/Slider';
 
 import {
   StyledProjectGallery,
-  Header,
-  Heading,
   ProjectSelect,
   Content,
-  Info,
   ProjectSelectItem,
   ProjectSelectItemImage,
-  ProjectSelectItemText,
 } from 'styles/ProjectGallery';
 
 export interface Project {
@@ -35,22 +32,45 @@ const ProjectGallery: FC<Props> = ({ projects }) => {
 
   return (
     <StyledProjectGallery>
-      <Header>
-        <Heading>Реализованные проекты</Heading>
-      </Header>
+      <Box display='flex'>
+        <Box mr={2}>
+          <Typography variant='h4'>Реализованные проекты</Typography>
+        </Box>
+        <Link href='/portfolio'>
+          <Button size='small' variant='contained' color='primary'>
+            Смотреть все
+          </Button>
+        </Link>
+        <Box flexGrow={1} />
+        <Link href='/projects'>
+          <Button variant='contained' color='primary' size='small'>
+            Типовые проекты
+          </Button>
+        </Link>
+      </Box>
       <ProjectSelect>
         {projects.map(({ id, images: [firstImage] }, index) => (
           <ProjectSelectItem key={id} $active={selectedProject === index} onClick={() => setSelectedProject(index)}>
-            <ProjectSelectItemText>№{id}</ProjectSelectItemText>
             <ProjectSelectItemImage src={firstImage} />
           </ProjectSelectItem>
         ))}
       </ProjectSelect>
       <Content>
-        <Slider slides={slides} />
-        <Info>
-          <Typography>Проект №{project.id}</Typography>
-        </Info>
+        <Box>
+          <Slider slides={slides} objectFit='contain' />
+        </Box>
+        <Box ml={3} display='flex' flexDirection='column'>
+          <Box width='100%'>
+            <Typography variant='h4'>Проект №{project.id}</Typography>
+          </Box>
+          <Box mt={4}>
+            <Link href={`/portfolio/${project.id}`}>
+              <Button color='primary' variant='contained'>
+                Перейти к проекту
+              </Button>
+            </Link>
+          </Box>
+        </Box>
       </Content>
     </StyledProjectGallery>
   );

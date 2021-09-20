@@ -14,17 +14,15 @@ const Footer: FC = () => {
       <Container>
         <Links>
           <Column>
-            <Link href='#'>Проекты</Link>
-            <Link href='#'>Портфолио</Link>
-            <Link href='#'>Проектирование</Link>
-          </Column>
-          <Column>
-            <Link>Цены</Link>
+            <Link href='/projects'>Проекты</Link>
+            <Link href='/portfolio'>Портфолио</Link>
+            {/* <Link href='#'>Проектирование</Link> */}
             <Link>Контакты</Link>
           </Column>
+          <Column>{/* <Link>Цены</Link> */}</Column>
         </Links>
         <Copyright>
-          2015 – {currentYear} © Все права защищены | <Link href='#'>политика конфиденциальности</Link>
+          2015 – {currentYear} © Все права защищены | <Link href='/privacy'>политика конфиденциальности</Link>
         </Copyright>
       </Container>
     </StyledFooter>
